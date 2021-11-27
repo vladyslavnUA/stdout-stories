@@ -1,12 +1,11 @@
 import json, os
 
-# {"number": "3", "unit": "inches", "place": "kitchen", "adjective": "small", "noun": "note"}
-
 def run():
 	full = input('Write in your fields in JSON format Ex. {"number": "3", "unit": "meters"...} \n')
 	
 	# check if input is empty
 	if not full == '':
+
 		# check if input is valid json
 		try:
 			valid = json.loads(full)
@@ -17,8 +16,6 @@ def run():
 			place = valid["place"]
 			adjective = valid["adjective"]
 			noun = valid["noun"]
-			
-			print(f'num: {num}\n unit: {unit}\n place: {place}\n adjective: {adjective}\n noun: {noun}\n ')
 			
 			# check for length restrictions
 			for a, b in valid.items():
@@ -46,33 +43,13 @@ def run():
 				# write new data into the file
 				with open('./stories.json', 'w') as otherfile:
 					json.dump(data, otherfile, indent=4)
-
+			print("");print("################################")
+			print("");print("Your Generated Story: ")
+			print(f"One day Anna was walking her {num} {unit} commute to {place} and found a {adjective} {noun} on the ground.")
+			print("");print("################################");print("")
 		except:
-			print('reason', valid)
 			print("Input could not be converted to JSON. Give it another try.")
 	else:
 		print("Empty input.")
-
-def save():
-	the = {"number": "4", "unit": "meters", "place": "kitchen", "adjective": "small", "noun": "note"}
-	if not os.path.exists('./stories.json'):
-		file = open('./stories.json','w+')
-		file.write('[')
-		file.write(json.dumps(the, indent=4, sort_keys=True))
-		file.write(']')
-		file.close()
-	else:
-		# file already exists, lets append
-
-		# load all previous data
-		this = open('./stories.json')
-		data = json.load(this)
-
-		# add our new data to the previous
-		data.append(the)
-
-		# write new data into the file
-		with open('./stories.json', 'w') as otherfile:
-			json.dump(data, otherfile, indent=4)
 
 run()
